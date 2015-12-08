@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYDQ.Infrastructure", "SYDQ.Infrastructure\SYDQ.Infrastructure.csproj", "{62B2D18D-E1AF-49C8-A1CB-F9813445019C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYDQ.Infrastructure.ConsoleTest", "SYDQ.Infrastructure.ConsoleTest\SYDQ.Infrastructure.ConsoleTest.csproj", "{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62B2D18D-E1AF-49C8-A1CB-F9813445019C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B2D18D-E1AF-49C8-A1CB-F9813445019C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B2D18D-E1AF-49C8-A1CB-F9813445019C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B2D18D-E1AF-49C8-A1CB-F9813445019C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
