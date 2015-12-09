@@ -14,25 +14,15 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
         private const string DefaultEmptyErrorMessageFormat = "Column \"{0}\" can not be empty.";
         private const string DefaultWrongDataTypeErrorMessageFormat = "The data with Column \"{0}\" has wrong type.";
         private const string ErrorInSheetFormat = "Errors in sheet \"{0}\": {1}{2}";
+        private const string DefaultLineMessageFormat = "Line {1}: ";
 
         private IWorkbook _workbook;
         private string _lineBreaker = Environment.NewLine;
         private string _errorMessage = String.Empty;
-        private readonly Dictionary<string, object> _excelData;
 
         public string ErrorMessage
         {
             get { return _errorMessage; }
-        }
-
-        public Dictionary<string, object> ExcelData
-        {
-            get { return _excelData; }
-        }
-
-        public NpoiImport()
-        {
-            _excelData = new Dictionary<string, object>();
         }
 
         public IExcelImport ReadExcel(string filePath)
@@ -72,36 +62,30 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
             return this;
         }
 
-        public IExcelImport WriteList<T>(int dataRowStartIndex)
+        public List<T> WriteList<T>(int dataRowStartIndex)
         {
             ISheet sheet = GetSheet<T>();
 
-            WriteListFrom<T>(sheet, dataRowStartIndex);
-
-            return this;
+            return WriteListFrom<T>(sheet, dataRowStartIndex);
         }
 
-        public IExcelImport WriteListBySheetName<T>(string sheetName, int dataRowStartIndex)
+        public List<T> WriteListBySheetName<T>(string sheetName, int dataRowStartIndex)
         {
             ISheet sheet = GetSheetByName(_workbook, sheetName);
 
-            WriteListFrom<T>(sheet, dataRowStartIndex);
-
-            return this;
+            return WriteListFrom<T>(sheet, dataRowStartIndex);
         }
 
-        public IExcelImport WriteListBySheetIndex<T>(int sheetIndex, int dataRowStartIndex)
+        public List<T> WriteListBySheetIndex<T>(int sheetIndex, int dataRowStartIndex)
         {
             ISheet sheet = GetSheetByIndex(_workbook, sheetIndex);
 
-            WriteListFrom<T>(sheet, dataRowStartIndex);
-
-            return this;
+            return WriteListFrom<T>(sheet, dataRowStartIndex);
         }
 
-        private void WriteListFrom<T>(ISheet sheet, int dataRowStartIndex)
+        private List<T> WriteListFrom<T>(ISheet sheet, int dataRowStartIndex)
         {
-            List<T> dataList = new List<T>();
+            List<T> returnList = new List<T>();
 
             var type = typeof (T);
             var props = type.GetProperties()
@@ -122,7 +106,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
 
                 IRow row = (IRow) rows.Current;
                 T tData = Activator.CreateInstance<T>();
-                dataList.Add(tData);
+                returnList.Add(tData);
 
                 for (int i = 0; i < props.Count; i++)
                 {
@@ -136,9 +120,9 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
                     if (piImportAttr.Required && string.IsNullOrEmpty(originalValue))
                     {
                         sbErrorMessage.Append(String.Format(
-                            "Line {1}: " + (string.IsNullOrEmpty(piImportAttr.EmptyErrorMessageFormat)
+                            DefaultLineMessageFormat + (string.IsNullOrEmpty(piImportAttr.RequiredErrorMessageFormat)
                                 ? DefaultEmptyErrorMessageFormat
-                                : piImportAttr.EmptyErrorMessageFormat),
+                                : piImportAttr.RequiredErrorMessageFormat),
                             piImportAttr.Description, curSheetRowIndex)).Append(_lineBreaker);
                         continue;
                     }
@@ -150,7 +134,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
                     catch
                     {
                         sbErrorMessage.Append(String.Format(
-                            "Line {1}: " + (string.IsNullOrEmpty(piImportAttr.DataTypeErrorMessageFormat)
+                            DefaultLineMessageFormat + (string.IsNullOrEmpty(piImportAttr.DataTypeErrorMessageFormat)
                                 ? DefaultWrongDataTypeErrorMessageFormat
                                 : piImportAttr.DataTypeErrorMessageFormat),
                             piImportAttr.Description, curSheetRowIndex)).Append(_lineBreaker);
@@ -168,7 +152,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
                     errorMessage) + _lineBreaker;
             }
 
-            _excelData.Add(sheet.SheetName, dataList);
+            return returnList;
         }
 
         #region Get ISheet

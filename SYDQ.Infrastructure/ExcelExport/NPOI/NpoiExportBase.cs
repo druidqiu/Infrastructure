@@ -115,7 +115,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         {
             Type type = typeof(T);
             var tableNameAttr =
-                (ExportDescriptionAttribute)Attribute.GetCustomAttribute(type, typeof(ExportDescriptionAttribute));
+                (ExportAttribute)Attribute.GetCustomAttribute(type, typeof(ExportAttribute));
             DataTable table = new DataTable(tableNameAttr == null ? type.Name : tableNameAttr.Description);
 
             if (dataList == null || !dataList.Any())
@@ -124,13 +124,13 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             }
 
             var props = type.GetProperties()
-                .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ExportDescriptionAttribute))
+                .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ExportAttribute))
                 .ToList();
 
             foreach (var pi in props)
             {
                 var columnAttr =
-                    (ExportDescriptionAttribute)pi.GetCustomAttributes(true).First(pa => pa is ExportDescriptionAttribute);
+                    (ExportAttribute)pi.GetCustomAttributes(true).First(pa => pa is ExportAttribute);
                 table.Columns.Add(new DataColumn
                 {
                     ColumnName = pi.Name,

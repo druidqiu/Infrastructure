@@ -20,18 +20,12 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 
         public void Start()
         {
-            string importPath = Path.Combine(ImportBaseFolder, "EX_5615.xlsx");
-            var excelImport = _excelImport.ReadExcel(importPath)
-                .WriteList<ImportDataModel>()
-                .WriteListBySheetIndex<ImportDataModel>(0);
+            string importPath = Path.Combine(ImportBaseFolder, "importTest.xlsx");
+            var excelImport = _excelImport.ReadExcel(importPath);
 
-            var excelData = excelImport.ExcelData;
-            foreach (var d in excelData)
-            {
-                //Type t = d.Key;
-                //var list = (t) d.Value;
-            }
-
+            var data1 = excelImport.WriteList<ImportDataModel>();
+            var data2 = excelImport.WriteListBySheetIndex<ImportDataModel>(1);
+            
             if (!string.IsNullOrEmpty(excelImport.ErrorMessage))
             {
                 Console.WriteLine(excelImport.ErrorMessage);
@@ -42,7 +36,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
         {
             get
             {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NpoiExport");
+                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NpoiTemplate");
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);

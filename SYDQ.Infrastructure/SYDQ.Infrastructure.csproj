@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExcelExport\IExcelExport.cs" />
-    <Compile Include="ExcelExport\ExportDescriptionAttribute.cs" />
+    <Compile Include="ExcelExport\ExportAttribute.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExport.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportBase.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportTemplate.cs" />

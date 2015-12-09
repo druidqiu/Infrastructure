@@ -90,7 +90,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         {
             Type type = typeof(T);
             var tableNameAttr =
-                (ExportDescriptionAttribute)Attribute.GetCustomAttribute(type, typeof(ExportDescriptionAttribute));
+                (ExportAttribute)Attribute.GetCustomAttribute(type, typeof(ExportAttribute));
             var sheetName = tableNameAttr == null ? type.Name : tableNameAttr.Description;
             return GetSheetByName(workbook, sheetName);
         }

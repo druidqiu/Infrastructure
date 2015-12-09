@@ -2,9 +2,9 @@
 
 namespace SYDQ.Infrastructure.ExcelExport
 {
-    public class ExportDescriptionAttribute : Attribute
+    public class ExportAttribute : Attribute
     {
-        public ExportDescriptionAttribute(string description)
+        public ExportAttribute(string description)
         {
             Description = description;
         }

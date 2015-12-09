@@ -9,7 +9,8 @@ namespace SYDQ.Infrastructure.ConsoleTest
         static void TestWrap()
         {
             //ExportTest.GetInstance().Start();
-            ImportTest.GetInstance().Start();
+            //ImportTest.GetInstance().Start();
+            Console.WriteLine("----------------------");
         }
 
 

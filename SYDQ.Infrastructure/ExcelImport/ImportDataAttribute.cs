@@ -11,7 +11,7 @@ namespace SYDQ.Infrastructure.ExcelImport
 
         public string Description { get; set; }
         public bool Required { get; set; }
-        public string EmptyErrorMessageFormat { get; set; }
+        public string RequiredErrorMessageFormat { get; set; }
         public string DataTypeErrorMessageFormat { get; set; }
     }
 }
