@@ -1,6 +1,8 @@
 ﻿using Autofac;
 using SYDQ.Infrastructure.ExcelExport;
 using SYDQ.Infrastructure.ExcelExport.NPOI;
+using SYDQ.Infrastructure.ExcelImport;
+using SYDQ.Infrastructure.ExcelImport.NPOI;
 
 namespace SYDQ.Infrastructure.ConsoleTest
 {
@@ -29,7 +31,7 @@ namespace SYDQ.Infrastructure.ConsoleTest
         {
             builder.RegisterType<NpoiExport>().As<IExcelExport>().SingleInstance();
             builder.RegisterType<NpoiExportTemplate>().As<IExcelExportTemplate>().SingleInstance();
-
+            builder.RegisterType<NpoiImport>().As<IExcelImport>().SingleInstance();
         }
     }
 }

@@ -66,6 +66,9 @@
     <Compile Include="ExcelExport\NPOI\NpoiExportBase.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportTemplate.cs" />
     <Compile Include="Common\ResponseHelper.cs" />
+    <Compile Include="ExcelImport\IExcelImport.cs" />
+    <Compile Include="ExcelImport\ImportDataAttribute.cs" />
+    <Compile Include="ExcelImport\NPOI\NpoiImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

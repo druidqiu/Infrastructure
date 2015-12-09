@@ -32,7 +32,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         {
             CheckWorkbookNull();
 
-            var sheet = GetSheetBy(dataList);
+            var sheet = GetSheet<T>(_workbook);
             return Add(dataList, sheet);
         }
 
@@ -86,13 +86,13 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             return this;
         }
 
-        private ISheet GetSheetBy<T>(IList<T> dataList)
+        private ISheet GetSheet<T>(IWorkbook workbook)
         {
             Type type = typeof(T);
             var tableNameAttr =
                 (ExportDescriptionAttribute)Attribute.GetCustomAttribute(type, typeof(ExportDescriptionAttribute));
             var sheetName = tableNameAttr == null ? type.Name : tableNameAttr.Description;
-            return GetSheetByName(_workbook, sheetName);
+            return GetSheetByName(workbook, sheetName);
         }
 
         /// <summary>

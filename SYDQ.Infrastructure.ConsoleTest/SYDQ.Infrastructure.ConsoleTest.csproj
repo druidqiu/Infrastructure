@@ -48,6 +48,7 @@
     <Compile Include="AutofacBooter.cs" />
     <Compile Include="NPOI\ExportDataModel.cs" />
     <Compile Include="NPOI\ExportTest.cs" />
+    <Compile Include="NPOI\ImportTest.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
