@@ -58,7 +58,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
         private void ExportByTemplate()
         {
             _excelExportTemplate.Create(GetTemplateFilePath(ExcelType.Xlsx))
-                .Add(GetTestData(19)).Add(GetTestData(99), "Oye123")
+                .AddSheet(GetTestData(19)).AddSheet(GetTestData(99), "Oye123")
                 .SaveToFile(ExportBaseFolder, "template_" + new Random().Next(10000));
         }
 
@@ -66,8 +66,8 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
         {
             _excelExport
                 .Create(ExcelType.Xlsx)
-                .Add(GetTestData(3))
-                .Add(GetTestData(5))
+                .AddSheet(GetTestData(3))
+                .AddSheet(GetTestData(5))
                 .SaveToFile(ExportBaseFolder, "EX_" + new Random().Next(10000));
         }
 

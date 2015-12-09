@@ -31,7 +31,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             return this;
         }
 
-        public IExcelExport Add<T>(IList<T> dataList)
+        public IExcelExport AddSheet<T>(IList<T> dataList)
         {
             CheckWorkbookNull();
 

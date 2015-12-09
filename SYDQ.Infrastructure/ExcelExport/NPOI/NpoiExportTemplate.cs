@@ -28,7 +28,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             return this;
         }
 
-        public IExcelExportTemplate Add<T>(IList<T> dataList)
+        public IExcelExportTemplate AddSheet<T>(IList<T> dataList)
         {
             CheckWorkbookNull();
 
@@ -36,7 +36,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             return Add(dataList, sheet);
         }
 
-        public IExcelExportTemplate Add<T>(IList<T> dataList, string sheetName)
+        public IExcelExportTemplate AddSheet<T>(IList<T> dataList, string sheetName)
         {
             CheckWorkbookNull();
 
@@ -44,7 +44,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             return Add(dataList, sheet);
         }
 
-        public IExcelExportTemplate Add<T>(IList<T> dataList, int sheetIndex)
+        public IExcelExportTemplate AddSheet<T>(IList<T> dataList, int sheetIndex)
         {
             CheckWorkbookNull();
 
