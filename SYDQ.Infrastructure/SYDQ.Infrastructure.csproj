@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,13 +60,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NPOI\ExportDescriptionAttribute.cs" />
-    <Compile Include="NPOI\ExportExcel.cs" />
+    <Compile Include="ExcelExport\IExcelExport.cs" />
+    <Compile Include="ExcelExport\ExportDescriptionAttribute.cs" />
+    <Compile Include="ExcelExport\NPOI\NpoiExport.cs" />
+    <Compile Include="ExcelExport\NPOI\NpoiExportBase.cs" />
+    <Compile Include="ExcelExport\NPOI\NpoiExportTemplate.cs" />
+    <Compile Include="Common\ResponseHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

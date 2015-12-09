@@ -4,17 +4,18 @@ using SYDQ.Infrastructure.ConsoleTest.NPOI;
 
 namespace SYDQ.Infrastructure.ConsoleTest
 {
-    class Program
+    static class Program
     {
         static void TestWrap()
         {
-            ExportTest.Start();
+            ExportTest.GetInstance().Start();
         }
-
 
 
         static void Main(string[] args)
         {
+            AutofacBooter.Run();
+
             Stopwatch watch = new Stopwatch();
             watch.Start();
 

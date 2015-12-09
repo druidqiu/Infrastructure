@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SYDQ.Infrastructure.NPOI
+namespace SYDQ.Infrastructure.ExcelExport
 {
     public class ExportDescriptionAttribute : Attribute
     {
