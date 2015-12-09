@@ -19,14 +19,13 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
 
         public IExcelExport Create(ExcelType excelType)
         {
-            if (_workbook == null)
-            {
-                _workbook = GetWorkbookByType(excelType);
-                if (excelType == ExcelType.Xls)
-                    _suffixLower = ".xls";
-                if (excelType == ExcelType.Xlsx)
-                    _suffixLower = ".xlsx";
-            }
+            ResetWorkbook();
+
+            _workbook = GetWorkbookByType(excelType);
+            if (excelType == ExcelType.Xls)
+                _suffixLower = ".xls";
+            if (excelType == ExcelType.Xlsx)
+                _suffixLower = ".xlsx";
 
             return this;
         }
@@ -62,6 +61,18 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             SaveFile(_workbook, saveToPath);
 
             return saveToPath;
+        }
+
+        public void Dispose()
+        {
+            ResetWorkbook();
+        }
+
+        private void ResetWorkbook()
+        {
+            _workbook = null;
+            _sheetCount = 0;
+            _suffixLower = "";
         }
 
         private void CheckWorkbookNull()

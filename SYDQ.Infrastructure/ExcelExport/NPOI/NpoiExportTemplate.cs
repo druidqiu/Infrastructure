@@ -10,6 +10,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         private IWorkbook _workbook;
         private int _sheetCount = 0;
         private string _suffixLower;
+
         public int NumberOfWritedSheet
         {
             get { return _sheetCount; }
@@ -17,13 +18,12 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
 
         public IExcelExportTemplate Create(string templatePath)
         {
-            if (_workbook == null)
-            {
-                _workbook = GetWorkbookByTemplatePath(templatePath);
-                var extension = Path.GetExtension(templatePath);
-                if (extension != null)
-                    _suffixLower = extension.ToLower();
-            }
+            ResetWorkbook();
+
+            _workbook = GetWorkbookByTemplatePath(templatePath);
+            var extension = Path.GetExtension(templatePath);
+            if (extension != null)
+                _suffixLower = extension.ToLower();
 
             return this;
         }
@@ -69,6 +69,19 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
 
             return saveToPath;
         }
+
+        public void Dispose()
+        {
+            ResetWorkbook();
+        }
+
+        private void ResetWorkbook()
+        {
+            _workbook = null;
+            _sheetCount = 0;
+            _suffixLower = "";
+        }
+
 
         private void CheckWorkbookNull()
         {

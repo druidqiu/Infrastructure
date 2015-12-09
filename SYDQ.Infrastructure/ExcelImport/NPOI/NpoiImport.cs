@@ -27,6 +27,8 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
 
         public IExcelImport ReadExcel(string filePath)
         {
+            ResetWorkbook();
+
             if (String.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentNullException("filePath", "File path can not be empty.");
@@ -81,6 +83,18 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
             ISheet sheet = GetSheetByIndex(_workbook, sheetIndex);
 
             return WriteListFrom<T>(sheet, dataRowStartIndex);
+        }
+
+        public void Dispose()
+        {
+            ResetWorkbook();
+        }
+
+        private void ResetWorkbook()
+        {
+            _workbook = null;
+            _lineBreaker = Environment.NewLine;
+            _errorMessage = String.Empty;
         }
 
         private List<T> WriteListFrom<T>(ISheet sheet, int dataRowStartIndex)

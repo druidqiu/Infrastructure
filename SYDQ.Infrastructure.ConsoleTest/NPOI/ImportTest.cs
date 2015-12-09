@@ -21,14 +21,17 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
         public void Start()
         {
             string importPath = Path.Combine(ImportBaseFolder, "importTest.xlsx");
-            var excelImport = _excelImport.ReadExcel(importPath);
-
-            var data1 = excelImport.WriteList<ImportDataModel>();
-            var data2 = excelImport.WriteListBySheetIndex<ImportDataModel>(1);
-            
-            if (!string.IsNullOrEmpty(excelImport.ErrorMessage))
+            using (_excelImport)
             {
-                Console.WriteLine(excelImport.ErrorMessage);
+                var excelImport = _excelImport.ReadExcel(importPath);
+
+                var data1 = excelImport.WriteList<ImportDataModel>();
+                var data2 = excelImport.WriteListBySheetIndex<ImportDataModel>(1);
+
+                if (!string.IsNullOrEmpty(excelImport.ErrorMessage))
+                {
+                    Console.WriteLine(excelImport.ErrorMessage);
+                }   
             }
         }
 

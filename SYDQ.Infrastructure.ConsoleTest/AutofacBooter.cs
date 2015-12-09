@@ -29,9 +29,9 @@ namespace SYDQ.Infrastructure.ConsoleTest
 
         private static void SetupResolveRules(ContainerBuilder builder)
         {
-            builder.RegisterType<NpoiExport>().As<IExcelExport>().SingleInstance();
-            builder.RegisterType<NpoiExportTemplate>().As<IExcelExportTemplate>().SingleInstance();
-            builder.RegisterType<NpoiImport>().As<IExcelImport>().SingleInstance();
+            builder.RegisterType<NpoiExport>().As<IExcelExport>().InstancePerDependency();
+            builder.RegisterType<NpoiExportTemplate>().As<IExcelExportTemplate>().InstancePerDependency();
+            builder.RegisterType<NpoiImport>().As<IExcelImport>().InstancePerDependency();
         }
     }
 }

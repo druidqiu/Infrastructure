@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SYDQ.Infrastructure.ExcelImport
 {
-    public interface IExcelImport
+    public interface IExcelImport : IDisposable
     {
         string ErrorMessage { get; }
         IExcelImport ReadExcel(string filePath);

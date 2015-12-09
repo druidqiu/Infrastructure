@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace SYDQ.Infrastructure.ExcelExport
 {
@@ -8,7 +9,7 @@ namespace SYDQ.Infrastructure.ExcelExport
         Xlsx
     }
 
-    public interface IExcelExport
+    public interface IExcelExport : IDisposable
     {
         IExcelExport Create(ExcelType excelType);
         IExcelExport AddSheet<T>(IList<T> dataList);
@@ -16,7 +17,7 @@ namespace SYDQ.Infrastructure.ExcelExport
         string SaveToFile(string folderPath, string fileNameWithoutSuffix);
     }
 
-    public interface IExcelExportTemplate
+    public interface IExcelExportTemplate : IDisposable
     {
         IExcelExportTemplate Create(string templatePath);
         IExcelExportTemplate AddSheet<T>(IList<T> dataList);
