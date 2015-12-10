@@ -2,9 +2,9 @@
 
 namespace SYDQ.Infrastructure.ExcelImport
 {
-    public class ImportDataAttribute : Attribute
+    public class ImportAttribute : Attribute
     {
-        public ImportDataAttribute(string description)
+        public ImportAttribute(string description)
         {
             Description = description;
         }

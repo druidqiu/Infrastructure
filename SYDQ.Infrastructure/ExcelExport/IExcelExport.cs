@@ -11,7 +11,7 @@ namespace SYDQ.Infrastructure.ExcelExport
 
     public interface IExcelExport : IDisposable
     {
-        IExcelExport Create(ExcelType excelType);
+        IExcelExport CreateWorkbook(ExcelType excelType);
         IExcelExport AddSheet<T>(IList<T> dataList);
         byte[] WriteToBytes();
         string SaveToFile(string folderPath, string fileNameWithoutSuffix);
@@ -19,7 +19,7 @@ namespace SYDQ.Infrastructure.ExcelExport
 
     public interface IExcelExportTemplate : IDisposable
     {
-        IExcelExportTemplate Create(string templatePath);
+        IExcelExportTemplate CreateWorkbook(string templatePath);
         IExcelExportTemplate AddSheet<T>(IList<T> dataList);
 
         IExcelExportTemplate AddSheet<T>(IList<T> dataList, string sheetName);

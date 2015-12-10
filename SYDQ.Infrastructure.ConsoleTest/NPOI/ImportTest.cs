@@ -6,33 +6,19 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 {
     public class ImportTest
     {
-        private readonly IExcelImport _excelImport;
-
-        protected ImportTest(IExcelImport excelImport)
-        {
-            _excelImport = excelImport;
-        }
-
-        public static ImportTest GetInstance()
-        {
-            return new ImportTest(AutofacBooter.GetInstance<IExcelImport>());
-        }
-
         public void Start()
         {
             string importPath = Path.Combine(ImportBaseFolder, "importTest.xlsx");
-            using (_excelImport)
+            var excelImporter = ExcelImportFactory.GetImporter();
+            excelImporter.ReadExcel(importPath);
+
+            var data1 = excelImporter.WriteList<ImportDataModel>();
+            var data2 = excelImporter.WriteListBySheetIndex<ImportDataModel>(1);
+
+            if (!string.IsNullOrEmpty(excelImporter.ErrorMessage))
             {
-                var excelImport = _excelImport.ReadExcel(importPath);
-
-                var data1 = excelImport.WriteList<ImportDataModel>();
-                var data2 = excelImport.WriteListBySheetIndex<ImportDataModel>(1);
-
-                if (!string.IsNullOrEmpty(excelImport.ErrorMessage))
-                {
-                    Console.WriteLine(excelImport.ErrorMessage);
-                }   
-            }
+                Console.WriteLine(excelImporter.ErrorMessage);
+            }  
         }
 
         private string ImportBaseFolder

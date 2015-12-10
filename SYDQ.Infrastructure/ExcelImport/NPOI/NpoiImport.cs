@@ -103,7 +103,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
 
             var type = typeof (T);
             var props = type.GetProperties()
-                .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ImportDataAttribute))
+                .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ImportAttribute))
                 .ToList();
 
             StringBuilder sbErrorMessage = new StringBuilder();
@@ -130,7 +130,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
                         : (row.GetCell(i) == null ? "" : row.GetCell(i).ToString());
 
                     var piImportAttr =
-                        (ImportDataAttribute) pi.GetCustomAttributes(true).First(pa => pa is ImportDataAttribute);
+                        (ImportAttribute) pi.GetCustomAttributes(true).First(pa => pa is ImportAttribute);
                     if (piImportAttr.Required && string.IsNullOrEmpty(originalValue))
                     {
                         sbErrorMessage.Append(String.Format(
@@ -174,7 +174,7 @@ namespace SYDQ.Infrastructure.ExcelImport.NPOI
         {
             Type type = typeof(T);
             var tableNameAttr =
-                (ImportDataAttribute)Attribute.GetCustomAttribute(type, typeof(ImportDataAttribute));
+                (ImportAttribute)Attribute.GetCustomAttribute(type, typeof(ImportAttribute));
             var sheetName = tableNameAttr == null ? type.Name : tableNameAttr.Description;
             return GetSheetByName(_workbook, sheetName);
         }

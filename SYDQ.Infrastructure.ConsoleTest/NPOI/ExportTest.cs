@@ -8,21 +8,6 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 {
     public class ExportTest
     {
-        private readonly IExcelExport _excelExport;
-        private readonly IExcelExportTemplate _excelExportTemplate;
-
-        protected ExportTest(IExcelExport excelExport,IExcelExportTemplate excelExportTemplate)
-        {
-            _excelExport = excelExport;
-            _excelExportTemplate = excelExportTemplate;
-        }
-
-        public static ExportTest GetInstance()
-        {
-            return new ExportTest(AutofacBooter.GetInstance<IExcelExport>(),
-                AutofacBooter.GetInstance<IExcelExportTemplate>());
-        }
-
         public void Start()
         {
             Export();
@@ -57,24 +42,21 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 
         private void ExportByTemplate()
         {
-            using (_excelExportTemplate)
-            {
-                _excelExportTemplate.Create(GetTemplateFilePath(ExcelType.Xlsx))
+            var templateExporter = ExcelExportFactory.GetTemplateExporter();
+
+            templateExporter.CreateWorkbook(GetTemplateFilePath(ExcelType.Xlsx))
                    .AddSheet(GetTestData(19)).AddSheet(GetTestData(99), "Oye123")
                    .SaveToFile(ExportBaseFolder, "template_" + new Random().Next(10000));   
-            }
         }
 
         private void Export()
         {
-            using (_excelExport)
-            {
-                _excelExport
-                .Create(ExcelType.Xlsx)
+            var excelExporter = ExcelExportFactory.GetExporter();
+            excelExporter
+                .CreateWorkbook(ExcelType.Xlsx)
                 .AddSheet(GetTestData(3))
                 .AddSheet(GetTestData(5))
                 .SaveToFile(ExportBaseFolder, "EX_" + new Random().Next(10000));
-            }
         }
 
         private IList<ExportDataModel> GetTestData(int count)

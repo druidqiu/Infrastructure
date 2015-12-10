@@ -60,14 +60,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExcelExport\ExcelExportFactory.cs" />
     <Compile Include="ExcelExport\IExcelExport.cs" />
     <Compile Include="ExcelExport\ExportAttribute.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExport.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportBase.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportTemplate.cs" />
     <Compile Include="Common\ResponseHelper.cs" />
+    <Compile Include="ExcelImport\ExcelImportFactory.cs" />
     <Compile Include="ExcelImport\IExcelImport.cs" />
-    <Compile Include="ExcelImport\ImportDataAttribute.cs" />
+    <Compile Include="ExcelImport\ImportAttribute.cs" />
     <Compile Include="ExcelImport\NPOI\NpoiImport.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

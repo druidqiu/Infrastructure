@@ -8,8 +8,8 @@ namespace SYDQ.Infrastructure.ConsoleTest
     {
         static void TestWrap()
         {
-            //ExportTest.GetInstance().Start();
-            //ImportTest.GetInstance().Start();
+            //new ExportTest().Start();
+            //new ImportTest().Start();
             Console.WriteLine("----------------------");
         }
 

@@ -17,7 +17,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
             get { return _sheetCount; }
         }
 
-        public IExcelExport Create(ExcelType excelType)
+        public IExcelExport CreateWorkbook(ExcelType excelType)
         {
             ResetWorkbook();
 
