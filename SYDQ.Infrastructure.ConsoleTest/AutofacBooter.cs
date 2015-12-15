@@ -1,4 +1,6 @@
 ﻿using Autofac;
+using SYDQ.Infrastructure.ConsoleTest.Email;
+using SYDQ.Infrastructure.Email;
 using SYDQ.Infrastructure.ExcelExport;
 using SYDQ.Infrastructure.ExcelExport.NPOI;
 using SYDQ.Infrastructure.ExcelImport;
@@ -25,6 +27,8 @@ namespace SYDQ.Infrastructure.ConsoleTest
             SetupResolveRules(builder);
 
             _container = builder.Build();
+
+            EmailServiceFactory.InitializeEmailServiceFactory(_container.Resolve<IEmailService>());
         }
 
         private static void SetupResolveRules(ContainerBuilder builder)
@@ -32,6 +36,9 @@ namespace SYDQ.Infrastructure.ConsoleTest
             builder.RegisterType<NpoiExport>().As<IExcelExport>().InstancePerDependency();
             builder.RegisterType<NpoiExportTemplate>().As<IExcelExportTemplate>().InstancePerDependency();
             builder.RegisterType<NpoiImport>().As<IExcelImport>().InstancePerDependency();
+
+            EmailSettingFactory.Initialize(SmtpEmailTest.EmailLocation);
+            builder.Register<IEmailService>(c => new SmtpMailService(EmailSettingFactory.GetSettings()));
         }
     }
 }
