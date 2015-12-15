@@ -8,7 +8,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
     {
         public void Start()
         {
-            string importPath = Path.Combine(ImportBaseFolder, "importTest.xlsx");
+            string importPath = Path.Combine(AppContent.NpoiTemplateFolder, "importTest.xlsx");
             var excelImporter = ExcelImportFactory.GetImporter();
             excelImporter.ReadExcel(importPath);
 
@@ -19,19 +19,6 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
             {
                 Console.WriteLine(excelImporter.ErrorMessage);
             }  
-        }
-
-        private string ImportBaseFolder
-        {
-            get
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NpoiTemplate");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                return path;
-            }
         }
     }
 }

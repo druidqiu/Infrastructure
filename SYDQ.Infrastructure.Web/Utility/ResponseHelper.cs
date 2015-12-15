@@ -3,10 +3,18 @@ using System.IO;
 using System.Text;
 using System.Web;
 
-namespace SYDQ.Infrastructure.Common
+namespace SYDQ.Infrastructure.Web.Utility
 {
     public class ResponseHelper
     {
+        public void RenderToBrowser(MemoryStream ms, HttpContext context, string fileName)
+        {
+            if (context.Request.Browser.Browser == "IE")
+                fileName = HttpUtility.UrlEncode(fileName);
+            context.Response.AddHeader("Content-Disposition", "attachment;fileName=" + fileName);
+            context.Response.BinaryWrite(ms.ToArray());
+        }
+
         public static void ResponseFile(string fileFullName, string fileDisplayName, string filePostfix)
         {
             byte[] bytes = ConvertFileToBytes(fileFullName);
@@ -20,6 +28,7 @@ namespace SYDQ.Infrastructure.Common
         {
             var bytes = ConvertFileToBytes(fileFullName);
             File.Delete(fileFullName);
+            if (bytes != null && bytes.Length > 0)
             if (bytes != null && bytes.Length > 0)
             {
                 ResponseWriteByteFile(bytes, fileDisplayName, filePostfix);
@@ -95,7 +104,7 @@ namespace SYDQ.Infrastructure.Common
                 reader = new BinaryReader((Stream)stream);
                 bytContent = reader.ReadBytes((Int32)stream.Length);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //TODO:
             }

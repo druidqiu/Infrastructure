@@ -15,22 +15,9 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 
         }
 
-        private string ExportBaseFolder
-        {
-            get
-            {
-                string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NpoiExport");
-                if (!Directory.Exists(path))
-                {
-                    Directory.CreateDirectory(path);
-                }
-                return path;
-            }
-        }
-
         private string GetTemplateFilePath(ExcelType excelType)
         {
-            string path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NpoiTemplate");
+            string path = AppContent.NpoiTemplateFolder;
             if (excelType == ExcelType.Xls)
                 path = Path.Combine(path, "npoiTemplate.xls");
             if(excelType == ExcelType.Xlsx)
@@ -46,7 +33,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 
             templateExporter.CreateWorkbook(GetTemplateFilePath(ExcelType.Xlsx))
                    .AddSheet(GetTestData(19)).AddSheet(GetTestData(99), "Oye123")
-                   .SaveToFile(ExportBaseFolder, "template_" + new Random().Next(10000));   
+                   .SaveToFile(AppContent.NpoiExcleExportFolder, "template_" + new Random().Next(10000));   
         }
 
         private void Export()
@@ -56,7 +43,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
                 .CreateWorkbook(ExcelType.Xlsx)
                 .AddSheet(GetTestData(3))
                 .AddSheet(GetTestData(5))
-                .SaveToFile(ExportBaseFolder, "EX_" + new Random().Next(10000));
+                .SaveToFile(AppContent.NpoiExcleExportFolder, "EX_" + new Random().Next(10000));
         }
 
         private IList<ExportDataModel> GetTestData(int count)

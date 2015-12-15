@@ -34,6 +34,10 @@
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.5\lib\net45-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NPOI, Version=2.1.3.1, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
       <Private>True</Private>
@@ -52,7 +56,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -60,8 +63,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Configuration\AppConfig.cs" />
+    <Compile Include="Configuration\AppConfigReader.cs" />
     <Compile Include="Email\EmailServiceFactory.cs" />
-    <Compile Include="Email\EmailSettingFactory.cs" />
     <Compile Include="Email\IEmailService.cs" />
     <Compile Include="Email\SmtpMailService.cs" />
     <Compile Include="ExcelExport\ExcelExportFactory.cs" />
@@ -70,19 +74,25 @@
     <Compile Include="ExcelExport\NPOI\NpoiExport.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportBase.cs" />
     <Compile Include="ExcelExport\NPOI\NpoiExportTemplate.cs" />
-    <Compile Include="Common\ResponseHelper.cs" />
     <Compile Include="ExcelImport\ExcelImportFactory.cs" />
     <Compile Include="ExcelImport\IExcelImport.cs" />
     <Compile Include="ExcelImport\ImportAttribute.cs" />
     <Compile Include="ExcelImport\NPOI\NpoiImport.cs" />
+    <Compile Include="Logging\ILogger.cs" />
+    <Compile Include="Logging\Log4NetAdapter.cs" />
+    <Compile Include="Logging\LoggingFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AppConfig.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="log4netConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Logging\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

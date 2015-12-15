@@ -7,6 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYDQ.Infrastructure", "SYDQ
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYDQ.Infrastructure.ConsoleTest", "SYDQ.Infrastructure.ConsoleTest\SYDQ.Infrastructure.ConsoleTest.csproj", "{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SYDQ.Infrastructure.Web", "SYDQ.Infrastructure.Web\SYDQ.Infrastructure.Web.csproj", "{CC4D42A2-FA25-4737-B804-DA23E74F8C95}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.Code", "1.Code", "{E8AB2240-8BAE-4B2A-8E72-221707F83EE7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.Test", "2.Test", "{CAC1556E-B869-469C-BD55-D495A0442027}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,8 +27,17 @@ Global
 		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC4D42A2-FA25-4737-B804-DA23E74F8C95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC4D42A2-FA25-4737-B804-DA23E74F8C95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC4D42A2-FA25-4737-B804-DA23E74F8C95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC4D42A2-FA25-4737-B804-DA23E74F8C95}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{62B2D18D-E1AF-49C8-A1CB-F9813445019C} = {E8AB2240-8BAE-4B2A-8E72-221707F83EE7}
+		{CC4D42A2-FA25-4737-B804-DA23E74F8C95} = {E8AB2240-8BAE-4B2A-8E72-221707F83EE7}
+		{B604FDF8-BCE2-4BB5-8D7B-4E8826B2D0BC} = {CAC1556E-B869-469C-BD55-D495A0442027}
 	EndGlobalSection
 EndGlobal
