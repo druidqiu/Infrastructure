@@ -5,9 +5,9 @@ namespace SYDQ.Infrastructure.Email
 {
     public enum EmailPriorityLevel
     {
-        Normal = 0,
-        Low = 1,
-        High = 2,
+        Normal,
+        Low,
+        High,
     }
 
     public class EmailAttachment

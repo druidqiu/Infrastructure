@@ -145,9 +145,7 @@ namespace SYDQ.Infrastructure.Email
             mailMessage.SubjectEncoding = Encoding.UTF8;
             mailMessage.BodyEncoding = Encoding.UTF8;
             mailMessage.IsBodyHtml = true;
-            mailMessage.Priority = priority == EmailPriorityLevel.High
-                ? MailPriority.High
-                : priority == EmailPriorityLevel.Normal ? MailPriority.Normal : MailPriority.Low;
+            mailMessage.Priority = (MailPriority) (int) priority;
             try
             {
                 SmtpSendMail(mailMessage);
