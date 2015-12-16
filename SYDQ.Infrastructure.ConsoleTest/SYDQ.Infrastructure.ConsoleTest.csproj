@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <Content Include="AppContent\EmailAttachments\codes.txt" />
     <Content Include="AppContent\EmailAttachments\jpg.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
