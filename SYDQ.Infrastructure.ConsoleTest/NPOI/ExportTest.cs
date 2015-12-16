@@ -6,7 +6,7 @@ using SYDQ.Infrastructure.ExcelExport;
 
 namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 {
-    public class ExportTest
+    public class ExportTest : TestBase
     {
         public void Start()
         {

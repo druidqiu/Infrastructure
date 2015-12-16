@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SYDQ.Infrastructure.Logging;
 
 namespace SYDQ.Infrastructure.ConsoleTest.Logging
 {
-    public class LoggingTest
+    public class LoggingTest : TestBase
     {
         public void Start()
         {

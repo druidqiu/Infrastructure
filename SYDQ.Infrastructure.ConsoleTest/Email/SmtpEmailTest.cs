@@ -5,7 +5,7 @@ using SYDQ.Infrastructure.Email;
 
 namespace SYDQ.Infrastructure.ConsoleTest.Email
 {
-    public class SmtpEmailTest
+    public class SmtpEmailTest : TestBase
     {
         public void Start()
         {

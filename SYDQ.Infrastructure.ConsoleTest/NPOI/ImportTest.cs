@@ -4,7 +4,7 @@ using SYDQ.Infrastructure.ExcelImport;
 
 namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 {
-    public class ImportTest
+    public class ImportTest : TestBase
     {
         public void Start()
         {

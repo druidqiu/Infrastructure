@@ -7,9 +7,9 @@ namespace SYDQ.Infrastructure.ConsoleTest
     {
         static void TestWrap()
         {
-            new NPOI.ExportTest().Start();
-            new NPOI.ImportTest().Start();
-            new Email.SmtpEmailTest().Start();
+            //new NPOI.ExportTest().Start();
+            //new NPOI.ImportTest().Start();
+            //new Email.SmtpEmailTest().Start();
             new Logging.LoggingTest().Start();
             Console.WriteLine("----------------------");
         }
