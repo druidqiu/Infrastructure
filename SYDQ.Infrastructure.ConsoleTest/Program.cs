@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using SYDQ.Infrastructure.ConsoleTest.Utilities;
 
 namespace SYDQ.Infrastructure.ConsoleTest
 {
@@ -10,7 +11,8 @@ namespace SYDQ.Infrastructure.ConsoleTest
             //new NPOI.ExportTest().Start();
             //new NPOI.ImportTest().Start();
             //new Email.SmtpEmailTest().Start();
-            new Logging.LoggingTest().Start();
+            //new Logging.LoggingTest().Start();
+            //new HtmlToPdfTest().Start();
             Console.WriteLine("----------------------");
         }
 
