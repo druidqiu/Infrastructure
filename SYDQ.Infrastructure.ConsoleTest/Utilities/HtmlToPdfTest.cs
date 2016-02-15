@@ -10,8 +10,11 @@ namespace SYDQ.Infrastructure.ConsoleTest.Utilities
     {
         public void Start()
         {
-            var pdfFileName = Guid.NewGuid() + ".pdf";
-            HtmlToPdf.GeneratePdf(GetHtmlBody(), "AppContent\\HtmlToPdf\\" + pdfFileName);
+            var pdfFileName = "AppContent\\HtmlToPdf\\" + Guid.NewGuid() + ".pdf";
+            var htmlText = GetHtmlBody();
+            var watermarkText = "Just a test,oye.";
+            //HtmlToPdf.GeneratePdfWithWartermark(htmlText, pdfFileName, watermarkText);
+            HtmlToPdf.GeneratePdf(htmlText, pdfFileName);
         }
 
 
