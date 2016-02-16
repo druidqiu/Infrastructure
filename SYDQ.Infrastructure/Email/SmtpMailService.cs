@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
@@ -35,23 +36,10 @@ namespace SYDQ.Infrastructure.Email
             _emailSettings = emailSettings;
         }
 
-        public bool SendMail(string to, string subject, string body, List<EmailImageInline> imgInlines,
+        public bool SendMail(List<string> tos, string subject, string body, List<EmailImageInline> imgInlines,
             List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High)
         {
-            return SmtpSendMail(to, null, null, subject, body, imgInlines, attachments, priority);
-        }
-
-        public bool SendMail(string to, string cc, string subject, string body, List<EmailImageInline> imgInlines,
-            List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High)
-        {
-            return SmtpSendMail(to, cc, null, subject, body, imgInlines, attachments, priority);
-        }
-
-        public bool SendMail(string to, string cc, string bcc, string subject, string body,
-            List<EmailImageInline> imgInlines, List<EmailAttachment> attachments = null,
-            EmailPriorityLevel priority = EmailPriorityLevel.High)
-        {
-            return SmtpSendMail(to, cc, bcc, subject, body, imgInlines, attachments, priority);
+            return SmtpSendMail(tos, null, null, subject, body, imgInlines, attachments, priority);
         }
 
         public bool SendMailAsync()
@@ -60,53 +48,38 @@ namespace SYDQ.Infrastructure.Email
             throw new NotImplementedException();
         }
 
-        private bool SmtpSendMail(string to, string cc, string bcc, string subject, string body,
+        private bool SmtpSendMail(List<string> tos, List<string> ccs, List<string> bccs, string subject, string body,
             List<EmailImageInline> imgInlines, List<EmailAttachment> attachments, EmailPriorityLevel priority)
         {
-            if (string.IsNullOrEmpty(to))
+            if (tos == null || tos.Count == 0 || !tos.Any(t => t.Contains("@")))
             {
-                throw new Exception("to is null");
+                throw new Exception("mail to is null");
             }
+
             MailMessage mailMessage = new MailMessage();
 
             #region prepare mail address
 
             mailMessage.From = new MailAddress(_emailSettings.FromAddress, _emailSettings.FromDisplayName);
-            if (!string.IsNullOrWhiteSpace(to))
+            tos.Where(t => t.Contains("@")).Select(t => t.Trim()).Distinct().ToList().ForEach(to =>
             {
-                string[] toArray = to.Split(new[] {Semicolon}, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var address in toArray)
+                mailMessage.To.Add(new MailAddress(to));
+            });
+
+            if (ccs != null)
+            {
+                ccs.Where(t => t.Contains("@")).Select(t => t.Trim()).Distinct().ToList().ForEach(cc =>
                 {
-                    MailAddress mTo = new MailAddress(address.Trim());
-                    if (!mailMessage.To.Contains(mTo))
-                    {
-                        mailMessage.To.Add(mTo);
-                    }
-                }
+                    mailMessage.CC.Add(new MailAddress(cc));
+                });
             }
-            if (!string.IsNullOrWhiteSpace(cc))
+
+            if (bccs != null)
             {
-                string[] ccArray = cc.Split(new[] {Semicolon}, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var address in ccArray)
+                bccs.Where(t => t.Contains("@")).Select(t => t.Trim()).Distinct().ToList().ForEach(bcc =>
                 {
-                    MailAddress mCc = new MailAddress(address.Trim());
-                    if (!mailMessage.CC.Contains(mCc))
-                    {
-                        mailMessage.CC.Add(mCc);
-                    }
-                }
-            }
-            if (!string.IsNullOrWhiteSpace(bcc))
-            {
-                string[] bccArray = bcc.Split(new[] {Semicolon}, StringSplitOptions.RemoveEmptyEntries);
-                foreach (var address in bccArray)
-                {
-                    MailAddress mBcc = new MailAddress(address.Trim());
-                    if (!mailMessage.Bcc.Contains(mBcc))
-                    {
-                        mailMessage.Bcc.Add(mBcc);
-                    }
-                }
+                    mailMessage.Bcc.Add(new MailAddress(bcc));
+                });
             }
 
             #endregion prepare mail address
@@ -151,9 +124,9 @@ namespace SYDQ.Infrastructure.Email
                 SmtpSendMail(mailMessage);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //TODO:Logging
+                Logging.LoggingFactory.GetLogger().Error("Send mail failed.", ex);
                 return false;
             }
         }

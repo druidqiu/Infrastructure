@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using SYDQ.Infrastructure.Email;
 
 namespace SYDQ.Infrastructure.ConsoleTest.Email
@@ -11,7 +12,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.Email
         {
             string attachimentFolder = AppContent.EmailAttachmentsFolder;
 
-            string to = "abc@ccccc.c;ccc@bb.d";
+            var tos ="abc@ccccc.c;ccc@bb.d;".Split(';').ToList();
             string subject = "my first email";
             string body = @"dear xx:<br/>
                             welcome to our family.<br/>
@@ -30,7 +31,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.Email
                 new EmailAttachment(Path.Combine(attachimentFolder,"txt.txt")),
             };
 
-            bool success = EmailServiceFactory.GetEmailService().SendMail(to, subject, body, imageInlines, attachments);
+            bool success = EmailServiceFactory.GetEmailService().SendMail(tos, subject, body, imageInlines, attachments);
             Console.WriteLine(success?"Send email success.":"Send email failed.");
         }
     }

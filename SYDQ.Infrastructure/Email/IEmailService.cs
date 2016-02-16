@@ -62,13 +62,7 @@ namespace SYDQ.Infrastructure.Email
 
     public interface IEmailService
     {
-        bool SendMail(string to, string subject, string body, List<EmailImageInline> imgInlines,
-            List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High);
-
-        bool SendMail(string to, string cc, string subject, string body, List<EmailImageInline> imgInlines,
-            List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High);
-
-        bool SendMail(string to, string cc, string bcc, string subject, string body, List<EmailImageInline> imgInlines,
+        bool SendMail(List<string> tos, string subject, string body, List<EmailImageInline> imgInlines,
             List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High);
 
         bool SendMailAsync();//TODO:

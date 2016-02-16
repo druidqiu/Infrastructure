@@ -12,7 +12,7 @@ namespace SYDQ.Infrastructure.ConsoleTest
             //new NPOI.ImportTest().Start();
             //new Email.SmtpEmailTest().Start();
             //new Logging.LoggingTest().Start();
-            new HtmlToPdfTest().Start();
+            //new HtmlToPdfTest().Start();
             Console.WriteLine("----------------------");
         }
 
