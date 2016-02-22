@@ -11,6 +11,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
 {
     public class NpoiExportBase
     {
+        #region Output
         protected void SaveFile(IWorkbook workbook, string saveToPath)
         {
             File.WriteAllBytes(saveToPath, WriteToBytes(workbook));
@@ -24,6 +25,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
                 return ms.ToArray();
             }
         }
+        #endregion Output
 
         protected void WriteDataToSheet(ISheet sheet, DataTable sheetData, int startRowIndex)
         {
@@ -110,46 +112,65 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         }
         #endregion Get IWorkbook
 
-        #region IList to DataTable
-        protected static DataTable ConvertToExportDataTable<T>(IList<T> dataList)
+        #region Write Sheet
+        protected void WriteHeaderToSheet<T>(ISheet sheet)
         {
+            ICellStyle headerCellStyle = sheet.Workbook.CreateCellStyle();
+            headerCellStyle.Alignment = HorizontalAlignment.Center;
+            headerCellStyle.VerticalAlignment = VerticalAlignment.Center;
+
             Type type = typeof(T);
-            var tableNameAttr =
-                (ExportAttribute)Attribute.GetCustomAttribute(type, typeof(ExportAttribute));
-            DataTable table = new DataTable(tableNameAttr == null ? type.Name : tableNameAttr.Description);
-
-            if (dataList == null || !dataList.Any())
-            {
-                return table;
-            }
-
             var props = type.GetProperties()
                 .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ExportAttribute))
                 .ToList();
 
-            foreach (var pi in props)
+            IRow headerRow = sheet.CreateRow(0);
+
+            for (int i = 0; i < props.Count; i++)
             {
+                var pi = props[i];
                 var columnAttr =
                     (ExportAttribute)pi.GetCustomAttributes(true).First(pa => pa is ExportAttribute);
-                table.Columns.Add(new DataColumn
-                {
-                    ColumnName = pi.Name,
-                    Caption = columnAttr.Description
-                });
+
+                var headerCell = headerRow.CreateCell(i);
+                headerCell.CellStyle = headerCellStyle;
+                headerCell.SetCellValue(columnAttr.Description);
+            }
+        }
+
+        protected void WriteDataToSheet<T>(ISheet sheet, IList<T> dataList, int startSheetRowIndex)
+        {
+            if (dataList == null || dataList.Count == 0)
+            {
+                return;
             }
 
-            foreach (var t in dataList)
+            Type type = typeof(T);
+            var props = type.GetProperties()
+                .Where(p => p.GetCustomAttributes(true).Any(pa => pa is ExportAttribute))
+                .ToList();
+
+            for (int i = 0; i < dataList.Count; i++)
             {
-                DataRow dataRow = table.NewRow();
-                table.Rows.Add(dataRow);
-                foreach (var pi in props)
+                IRow row = sheet.CreateRow(startSheetRowIndex + i);
+                var data = dataList[i];
+                for (int j = 0; j < props.Count; j++)
                 {
-                    dataRow[pi.Name] = pi.GetValue(t, null);
+                    var pi = props[j];
+                    var piType = pi.PropertyType.Name;
+                    if (piType == "Decimal" || piType == "Int32" || piType == "Double")
+                    {
+                        double d = 0;
+                        Double.TryParse(pi.GetValue(data, null).ToString(), out d);
+                        row.CreateCell(j, CellType.Numeric).SetCellValue(d);
+                    }
+                    else
+                    {
+                        row.CreateCell(j, CellType.String).SetCellValue(pi.GetValue(data, null).ToString());
+                    }
                 }
             }
-
-            return table;
         }
-        #endregion IList to DataTable
+        #endregion Write Sheet
     }
 }

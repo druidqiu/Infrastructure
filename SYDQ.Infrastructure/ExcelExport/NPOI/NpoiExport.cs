@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using NPOI.SS.UserModel;
 
@@ -33,13 +32,9 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
         public IExcelExport AddSheet<T>(IList<T> dataList)
         {
             CheckWorkbookNull();
-
-            var sheetData = ConvertToExportDataTable(dataList);
-            var sheet = CreateDefatultSheet(_workbook, GetSheetNameFrom(sheetData));
-            
-            WriteHeaderToSheet(sheet, sheetData.Columns);
-            WriteDataToSheet(sheet, sheetData, FirstDataRowIndexOfSheet);
-
+            var sheet = CreateDefatultSheet<T>(_workbook);
+            WriteHeaderToSheet<T>(sheet);
+            WriteDataToSheet(sheet, dataList, FirstDataRowIndexOfSheet);
             _sheetCount++;
 
             return this;
@@ -81,42 +76,26 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
                 throw new NullReferenceException("The workbook is null, please call the \"Create\" method first.");
         }
 
-        private void WriteHeaderToSheet(ISheet sheet, DataColumnCollection columns)
+        private ISheet CreateDefatultSheet<T>(IWorkbook workbook)
         {
-            ICellStyle headerCellStyle = sheet.Workbook.CreateCellStyle();
-            headerCellStyle.Alignment = HorizontalAlignment.Center;
-            headerCellStyle.VerticalAlignment = VerticalAlignment.Center;
+            Type type = typeof(T);
+            var tableNameAttr = (ExportAttribute)Attribute.GetCustomAttribute(type, typeof(ExportAttribute));
 
-            IRow headerRow = sheet.CreateRow(0);
-            for (int i = 0; i < columns.Count; i++)
-            {
-                var headerCell = headerRow.CreateCell(i);
-                headerCell.CellStyle = headerCellStyle;
-                headerCell.SetCellValue(columns[i].Caption);
-            }
-        }
-
-        private ISheet CreateDefatultSheet(IWorkbook workbook, string sheetName)
-        {
+            var sheetName = tableNameAttr == null ? type.Name : tableNameAttr.Description;
             if (String.IsNullOrEmpty(sheetName))
             {
                 sheetName = Guid.NewGuid().ToString();
             }
-            ISheet sheet = workbook.CreateSheet(sheetName);
-            sheet.DefaultColumnWidth = 10;//almost the same
-            sheet.DefaultRowHeight = 360;//actual height multiply 20
-
-            return sheet;
-        }
-        private string GetSheetNameFrom(DataTable sheetData)
-        {
-            var sheetName = sheetData.TableName;
             if (_workbook.GetSheet(sheetName) != null)
             {
                 sheetName = sheetName + "_" + new Random().Next(1000);
             }
 
-            return sheetName;
+            ISheet sheet = workbook.CreateSheet(sheetName);
+            sheet.DefaultColumnWidth = 15; //almost the same
+            sheet.DefaultRowHeight = 300; //actual height multiply 20
+
+            return sheet;
         }
     }
 }

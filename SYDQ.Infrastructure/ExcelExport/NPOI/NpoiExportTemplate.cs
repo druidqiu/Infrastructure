@@ -91,10 +91,7 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
 
         private NpoiExportTemplate Add<T>(IList<T> dataList, ISheet sheet)
         {
-            var sheetData = ConvertToExportDataTable(dataList);
-
-            WriteDataToSheet(sheet, sheetData, GetFirstBlankRowIndex(sheet));
-
+            WriteDataToSheet(sheet, dataList, GetFirstBlankRowIndex(sheet));
             _sheetCount++;
             return this;
         }
