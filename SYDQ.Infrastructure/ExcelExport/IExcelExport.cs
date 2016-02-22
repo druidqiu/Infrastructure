@@ -11,20 +11,10 @@ namespace SYDQ.Infrastructure.ExcelExport
 
     public interface IExcelExport : IDisposable
     {
-        IExcelExport CreateWorkbook(ExcelType excelType);
-        IExcelExport AddSheet<T>(IList<T> dataList);
-        byte[] WriteToBytes();
-        string SaveToFile(string folderPath, string fileNameWithoutSuffix);
-    }
-
-    public interface IExcelExportTemplate : IDisposable
-    {
-        IExcelExportTemplate CreateWorkbook(string templatePath);
-        IExcelExportTemplate AddSheet<T>(IList<T> dataList);
-
-        IExcelExportTemplate AddSheet<T>(IList<T> dataList, string sheetName);
-
-        IExcelExportTemplate AddSheet<T>(IList<T> dataList, int sheetIndex);
+        int NumberOfSheet { get; }
+        IExcelExport CreateWorkbook(ExcelType excelType = ExcelType.Xlsx);
+        IExcelExport CreateWorkbook(string templatePath);
+        IExcelExport AddSheet<T>(IList<T> dataList, string sheetName = "");
         byte[] WriteToBytes();
         string SaveToFile(string folderPath, string fileNameWithoutSuffix);
     }

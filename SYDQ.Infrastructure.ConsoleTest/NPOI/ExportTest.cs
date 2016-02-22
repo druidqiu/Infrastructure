@@ -29,7 +29,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
 
         private void ExportByTemplate()
         {
-            var templateExporter = ExcelExportFactory.GetTemplateExporter();
+            var templateExporter = ExcelExportFactory.GetExporter();
 
             templateExporter.CreateWorkbook(GetTemplateFilePath(ExcelType.Xlsx))
                    .AddSheet(GetTestData(19)).AddSheet(GetTestData(99), "Oye123")
@@ -40,9 +40,9 @@ namespace SYDQ.Infrastructure.ConsoleTest.NPOI
         {
             var excelExporter = ExcelExportFactory.GetExporter();
             excelExporter
-                .CreateWorkbook(ExcelType.Xlsx)
+                .CreateWorkbook()
                 .AddSheet(GetTestData(3))
-                .AddSheet(GetTestData(5))
+                .AddSheet(GetTestData(5),"abc")
                 .SaveToFile(AppContent.NpoiExcleExportFolder, "EX_" + new Random().Next(10000));
         }
 

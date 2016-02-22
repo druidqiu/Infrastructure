@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SYDQ.Infrastructure.ExcelExport.NPOI;
+﻿using SYDQ.Infrastructure.ExcelExport.NPOI;
 
 namespace SYDQ.Infrastructure.ExcelExport
 {
@@ -11,12 +6,7 @@ namespace SYDQ.Infrastructure.ExcelExport
     {
         public static IExcelExport GetExporter()
         {
-            return new NpoiExport();
-        }
-
-        public static IExcelExportTemplate GetTemplateExporter()
-        {
-            return new NpoiExportTemplate();
+            return new NpoiExcelExport();
         }
     }
 }
