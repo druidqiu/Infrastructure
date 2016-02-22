@@ -10,9 +10,14 @@ namespace SYDQ.Infrastructure.ConsoleTest.Email
     {
         public void Start()
         {
+            ParallelMail();
+        }
+
+        private void SingleMail()
+        {
             string attachimentFolder = AppContent.EmailAttachmentsFolder;
 
-            var tos ="abc@ccccc.c;ccc@bb.d;".Split(';').ToList();
+            var tos = "abc@ccccc.c;ccc@bb.d;".Split(';').ToList();
             string subject = "my first email";
             string body = @"dear xx:<br/>
                             welcome to our family.<br/>
@@ -24,7 +29,7 @@ namespace SYDQ.Infrastructure.ConsoleTest.Email
             {
                 new EmailImageInline("s1", Path.Combine(attachimentFolder, "jpg.jpg"))
             };
-            
+
             List<EmailAttachment> attachments = new List<EmailAttachment>
             {
                 new EmailAttachment(Path.Combine(attachimentFolder,"xlsx.xlsx")),
@@ -32,7 +37,16 @@ namespace SYDQ.Infrastructure.ConsoleTest.Email
             };
 
             bool success = EmailServiceFactory.GetEmailService().SendMail(tos, subject, body, imageInlines, attachments);
-            Console.WriteLine(success?"Send email success.":"Send email failed.");
+            Console.WriteLine(success ? "Send email success." : "Send email failed.");
+        }
+
+        private void ParallelMail()
+        {
+            var mailMessages = Enumerable.Range(1, 300)
+                .Select(r => new CustomMailMessage(r + "@cc", "subject for " + r, "It is the body for user " + r))
+                .ToList();
+
+            EmailServiceFactory.GetEmailService().SendMail(mailMessages);
         }
     }
 }

@@ -60,10 +60,26 @@ namespace SYDQ.Infrastructure.Email
         public int Timeout { get; set; }
     }
 
+    public class CustomMailMessage
+    {
+        public CustomMailMessage(string toAddress, string subject, string body)
+        {
+            ToAddress = toAddress;
+            Subject = subject;
+            Body = body;
+        }
+
+        public string ToAddress { get; private set; }
+        public string Subject { get; private set; }
+        public string Body { get; private set; }
+    }
+
     public interface IEmailService
     {
         bool SendMail(List<string> tos, string subject, string body, List<EmailImageInline> imgInlines,
             List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High);
+
+        void SendMail(IList<CustomMailMessage> mails);
 
         bool SendMailAsync();//TODO:
     }

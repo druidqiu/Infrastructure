@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 using SYDQ.Infrastructure.Configuration;
 
 namespace SYDQ.Infrastructure.Email
@@ -40,6 +41,29 @@ namespace SYDQ.Infrastructure.Email
             List<EmailAttachment> attachments = null, EmailPriorityLevel priority = EmailPriorityLevel.High)
         {
             return SmtpSendMail(tos, null, null, subject, body, imgInlines, attachments, priority);
+        }
+
+        public void SendMail(IList<CustomMailMessage> mails)
+        {
+            var errorMails = new List<CustomMailMessage>();
+
+            var parallelOption = new ParallelOptions
+            {
+                MaxDegreeOfParallelism = Environment.ProcessorCount * 2
+            };
+            Parallel.ForEach(mails, parallelOption, mailMessage =>
+            {
+                if (mailMessage != null)
+                {
+                    var to = new List<string> { mailMessage.ToAddress };
+
+                    if (!SmtpSendMail(to, null, null, mailMessage.Subject, mailMessage.Body, null, null,
+                        EmailPriorityLevel.High))
+                    {
+                        errorMails.Add(mailMessage);
+                    }
+                }
+            });
         }
 
         public bool SendMailAsync()
