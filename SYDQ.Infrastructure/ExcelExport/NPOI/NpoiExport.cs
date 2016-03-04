@@ -245,15 +245,17 @@ namespace SYDQ.Infrastructure.ExcelExport.NPOI
                 {
                     var pi = props[j];
                     var piType = pi.PropertyType.Name;
+                    var piValue = pi.GetValue(data, null);
+                    string piValueStr = piValue == null ? string.Empty : piValue.ToString();
                     if (piType == "Decimal" || piType == "Int32" || piType == "Double")
                     {
                         double d = 0;
-                        Double.TryParse(pi.GetValue(data, null).ToString(), out d);
+                        Double.TryParse(piValueStr, out d);
                         row.CreateCell(j, CellType.Numeric).SetCellValue(d);
                     }
                     else
                     {
-                        row.CreateCell(j, CellType.String).SetCellValue(pi.GetValue(data, null).ToString());
+                        row.CreateCell(j, CellType.String).SetCellValue(piValueStr);
                     }
                 }
             }
